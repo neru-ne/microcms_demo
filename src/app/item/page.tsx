@@ -50,6 +50,7 @@ export default function Item() {
                       <p className="text-lg font-bold mb-2">{item.name}</p>
                       <CategoryList
                       list={item.category} className="flex flex-wrap gap-2" keyName="item-category-"
+                      link={false}
                       />
                       <TagList
                       list={item.kinds}

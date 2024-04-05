@@ -17,6 +17,7 @@ export type categoryListType = {
   }[],
   className:string,
   keyName:string,
+  link: boolean,
 }
 //TagList
 export type tagListType = {
@@ -35,10 +36,27 @@ export type itemSlideshowType = {
   keyName:string,
 }
 //ErrorContentsArea
-export type errorContentsArea = {
+export type errorContentsAreaType = {
   data: any,
   error: any,
   buttonSetting?: commonButtonType,
+}
+//CustomerList
+export type customerListType = {
+  list: {
+    fieldId: string;
+    name: string;
+    contents: string;
+  }[],
+  className: string,
+  keyName: string,
+}
+
+//RepeatContents
+export type repeatContentsType = {
+  data: {
+    [key: string]: any
+  }[]
 }
 
 //PageHeader

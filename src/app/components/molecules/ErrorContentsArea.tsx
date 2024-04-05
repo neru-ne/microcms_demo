@@ -1,7 +1,7 @@
-import { errorContentsArea } from '@/app/types/components'
+import { errorContentsAreaType } from '@/app/types/components'
 import { CommonButton } from "@/app/components/atoms/button/CommonButton";
 
-export const ErrorContentsArea = (props: errorContentsArea) => {
+export const ErrorContentsArea = (props: errorContentsAreaType) => {
   const { data, error, buttonSetting } = props;
 
   if (error) {

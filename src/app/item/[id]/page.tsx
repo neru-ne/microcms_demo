@@ -9,12 +9,17 @@ import parse from 'html-react-parser';
 import { getRequest } from "@/app/api/index"
 import { MainContents } from '@/app/components/layouts/MainContents'
 import { PageHeader } from '@/app/components/organisms/PageHeader'
+
+//atoms
 import { CommonButton } from "@/app/components/atoms/button/CommonButton";
 import { TagList } from "@/app/components/atoms/list/TagList";
 import { CategoryList } from "@/app/components/atoms/list/CategoryList"
-import { ErrorContentsArea } from '@/app/components/molecules/ErrorContentsArea'
 import { ItemSlideshow } from '@/app/components/atoms/slideshow/ItemSlideshow'
 
+//molecules
+import { ErrorContentsArea } from '@/app/components/molecules/ErrorContentsArea'
+import { CustomerList } from '@/app/components/molecules/CutomerList'
+import { RepeatContents } from '@/app/components/molecules/RepeatContents'
 
 //types
 import { commonButtonType } from '@/app/types/components'
@@ -31,6 +36,10 @@ export default function ItemDetail() {
     blank: false,
   }
 
+  const params = {
+    fields: 'id,name,category,kinds,price,default,custom,contents',
+  };
+
   const pathname = usePathname();
   const pageUrls = pathname.split('/');
   const len = pageUrls.length;
@@ -38,18 +47,14 @@ export default function ItemDetail() {
   const detailId = pageUrls[len - 1];
 
   const [item, setItem] = useRecoilState(itemAtom);
-  const { data, error } = useSWR(`${NEXT_PUBLIC_MICROCMS_URL}/item/${detailId}`, getRequest);
+  const { data, error } = useSWR([`${NEXT_PUBLIC_MICROCMS_URL}/item/${detailId}`, params], ([url, params]) => getRequest(url, params))
 
   useEffect(() => {
     if (data) {
+      console.log(data.data)
       setItem(data.data)
     }
   }, [data])
-
-  if (data) {
-    console.log(data.data)
-  }
-
   return (
     <>
       <PageHeader heading={false}>商品</PageHeader>
@@ -60,6 +65,7 @@ export default function ItemDetail() {
             <>
               <CategoryList
                 list={item.category} className="flex flex-wrap gap-2 mb-4" keyName="item-category-"
+                link={true}
               />
               <h1 className="text-2xl font-bold">{item.name}</h1>
               <div className="flex flex-wrap gap-2 mt-4">
@@ -77,19 +83,32 @@ export default function ItemDetail() {
               </div>
 
 
-              <div className='whitespace-pre-wrap mt-4'>
+              <div className='mt-4'>
                 <p className="text-xl font-bold mb-2">{item.default.lead}</p>
 
-                <ItemSlideshow list={item.default.img} className="c-itemSlideshow mb-2" keyName="item-slideshow-"/>
-
-
-
-                <div className="">
-                  {item.default.contents && parse(item.default.contents)}
-                </div>
-
-
-
+                {/* slideshow */}
+                {
+                  item.default.img && 0 < item.default.img.length && (
+                    <ItemSlideshow list={item.default.img} className="c-itemSlideshow mb-2" keyName="item-slideshow-" />
+                  )
+                }
+                {
+                  item.default.contents && (
+                    <div className="">
+                      {parse(item.default.contents)}
+                    </div>
+                  )
+                }
+                {
+                  item.custom && 0 < item.custom.body.length && (
+                    <CustomerList list={item.custom.body} className="mt-8 mb-2" keyName="item-customerList-" />
+                  )
+                }
+                {
+                  item.contents && 0 < item.contents.length && (
+                    <RepeatContents data={item.contents}  />
+                  )
+                }
               </div>
               <div className="w-full flex justify-center mt-20">
                 <CommonButton {...backButton} />

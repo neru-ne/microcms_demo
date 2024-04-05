@@ -12,18 +12,21 @@ export const ItemSlideshow = (props: itemSlideshowType) => {
     list, className, keyName,
   } = props;
 
-  const slideOption = {
+  let slideOption = {
     modules: [Navigation, Pagination, Autoplay],
     navigation:true,
     pagination:{
       clickable: true
     },
-    loop:true,
+    loop:false,
     autoplay:{
       delay: 3000,
     },
     spaceBetween:50,
     slidesPerView:1,
+  }
+  if (list.length < 1){
+    slideOption.loop = true;
   }
 
   return (
@@ -42,7 +45,6 @@ export const ItemSlideshow = (props: itemSlideshowType) => {
           })
         }
       </Swiper>
-
     )
   )
 }
