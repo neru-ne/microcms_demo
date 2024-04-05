@@ -64,3 +64,8 @@ export type pageHeaderType = {
   heading:boolean,
   children:ReactNode,
 }
+
+//searchFormType
+export type searchFormType = {
+  onClick: () => void,
+}
