@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import useSWR from 'swr';
 import { useRecoilState } from "recoil";
 import { itemAtom } from "@/app/recoil/itemAtom";
+import parse from 'html-react-parser';
 
 import { getRequest } from "@/app/api/index"
 import { MainContents } from '@/app/components/layouts/MainContents'
@@ -11,7 +12,8 @@ import { PageHeader } from '@/app/components/organisms/PageHeader'
 import { CommonButton } from "@/app/components/atoms/button/CommonButton";
 import { TagList } from "@/app/components/atoms/list/TagList";
 import { CategoryList } from "@/app/components/atoms/list/CategoryList"
-
+import { ErrorContentsArea } from '@/app/components/molecules/ErrorContentsArea'
+import { ItemSlideshow } from '@/app/components/atoms/slideshow/ItemSlideshow'
 
 
 //types
@@ -35,61 +37,24 @@ export default function ItemDetail() {
 
   const detailId = pageUrls[len - 1];
 
-
   const [item, setItem] = useRecoilState(itemAtom);
-
-
   const { data, error } = useSWR(`${NEXT_PUBLIC_MICROCMS_URL}/item/${detailId}`, getRequest);
 
   useEffect(() => {
     if (data) {
       setItem(data.data)
     }
-    retrunDispay();
   }, [data])
 
   if (data) {
-    // setItem(data.data)
     console.log(data.data)
-  }
-
-  const retrunDispay = () => {
-    if (error) {
-      console.log(error)
-      if (error.response.status === 404) {
-        return (
-          <>
-            <p className="text-xl font-bold">おや？記事がないみたい。<br />Itemへ戻って探してみて！</p>
-            <div className="w-full flex justify-center">
-              <CommonButton {...backButton} />
-            </div>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <p className="text-xl font-bold">取得失敗</p>
-            <div className="w-full flex justify-center">
-              <CommonButton {...backButton} />
-            </div>
-          </>
-
-        );
-      }
-    } else {
-      if (!data) {
-        return (
-          <p>loading...</p>
-        )
-      }
-    }
   }
 
   return (
     <>
       <PageHeader heading={false}>商品</PageHeader>
       <MainContents>
-        {retrunDispay()}
+        <ErrorContentsArea data={data} error={error} buttonSetting={backButton} />
         {
           item && (
             <>
@@ -115,14 +80,16 @@ export default function ItemDetail() {
               <div className='whitespace-pre-wrap mt-4'>
                 <p className="text-xl font-bold mb-2">{item.default.lead}</p>
 
+                <ItemSlideshow list={item.default.img} className="c-itemSlideshow mb-2" keyName="item-slideshow-"/>
 
 
-                <div>
 
+                <div className="">
+                  {item.default.contents && parse(item.default.contents)}
                 </div>
 
 
-                
+
               </div>
               <div className="w-full flex justify-center mt-20">
                 <CommonButton {...backButton} />

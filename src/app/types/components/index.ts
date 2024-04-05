@@ -34,6 +34,12 @@ export type itemSlideshowType = {
   className:string,
   keyName:string,
 }
+//ErrorContentsArea
+export type errorContentsArea = {
+  data: any,
+  error: any,
+  buttonSetting?: commonButtonType,
+}
 
 //PageHeader
 export type pageHeaderType = {
