@@ -61,7 +61,7 @@ export default function ItemDetail() {
       <MainContents>
         <ErrorContentsArea data={data} error={error} buttonSetting={backButton} />
         {
-          item && (
+          data && item && (
             <>
               <CategoryList
                 list={item.category} className="flex flex-wrap gap-2 mb-4" keyName="item-category-"

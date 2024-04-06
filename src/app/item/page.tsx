@@ -22,7 +22,7 @@ export default function Item() {
   const [itemList, setItemList] = useRecoilState(itemListAtom);
 
   let params = {
-    limit: 1,
+    limit: process.env.NEXT_PUBLIC_ITEM_PER_PAGE,
     fields: 'id,name,category,kinds,price',
     offset:0
   };
@@ -50,7 +50,7 @@ export default function Item() {
       <MainContents>
         <ErrorContentsArea data={data} error={error} />
         {
-          itemList && <Archive {...itemList} />
+          data && itemList && <Archive {...itemList} />
         }
         <PageNavi url="/item" />
       </MainContents>

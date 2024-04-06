@@ -13,6 +13,7 @@ import { MainContents } from '@/app/components/layouts/MainContents'
 import { Archive } from "@/app/components/organisms/Archive";
 
 import { CommonButton } from "@/app/components/atoms/button/CommonButton";
+import { PageNavi } from '@/app/components/atoms/navi/pageNavi'
 import { ErrorContentsArea } from '@/app/components/molecules/ErrorContentsArea'
 
 //Utils
@@ -58,7 +59,7 @@ export default function Category() {
   const [itemList, setItemList] = useRecoilState(itemListAtom);
 
   let params = {
-    limit: 10,
+    limit: process.env.NEXT_PUBLIC_ITEM_PER_PAGE,
     fields: 'id,name,category,kinds,price',
     filters: '',
     offset:0,
@@ -66,7 +67,7 @@ export default function Category() {
   const searchParams = useSearchParams();
   const paramsPage = searchParams.get("page");
   if (paramsPage) {
-    params.offset = Number(paramsPage)
+    params.offset = Number(paramsPage) -1
   }
 
   if (activeCategory) {
@@ -89,12 +90,11 @@ export default function Category() {
       <MainContents>
         <ErrorContentsArea data={data} error={error} />
         {
-          itemList && (
+          data && itemList && activeCategory && (
             <>
-              {
-                activeCategory && <p className="font-bold text-xl mb-6">カテゴリー：{activeCategory.name}の商品</p>
-              }
+                <p className="font-bold text-xl mb-6">カテゴリー：{activeCategory.name}の商品</p>
               <Archive {...itemList} />
+              <PageNavi url={`/item/category/${activeCategory.slug}`} />
             </>
           )
         }

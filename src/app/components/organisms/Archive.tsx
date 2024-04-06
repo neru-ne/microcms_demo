@@ -12,7 +12,7 @@ export const Archive = (props:itemListType) => {
         {
           props.contents.map((item, index) => (
             <li className='list-none rounded-xl border-solid bg-[#fbfbfb] shadow-md' key={`itemList-${index}`}>
-              <Link href={`item/${item.id}`} className="p-4 block">
+              <Link href={`/item/${item.id}`} className="p-4 block">
                 <p className="text-lg font-bold mb-2">{item.name}</p>
                 <CategoryList
                   list={item.category} className="flex flex-wrap gap-2" keyName="item-category-"

@@ -39,3 +39,7 @@ body {}
   max-width: 600px;
   aspect-ratio: 5 / 3;
 }
+
+.c-pageNavi .is-current {
+  @apply bg-primary text-white
+}
