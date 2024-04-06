@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import useSWR from 'swr';
 import { useRecoilState } from "recoil";
 import { itemListAtom } from "@/app/recoil/itemListAtom";
@@ -60,8 +60,14 @@ export default function Category() {
   let params = {
     limit: 10,
     fields: 'id,name,category,kinds,price',
-    filters: ``
+    filters: '',
+    offset:0,
   };
+  const searchParams = useSearchParams();
+  const paramsPage = searchParams.get("page");
+  if (paramsPage) {
+    params.offset = Number(paramsPage)
+  }
 
   if (activeCategory) {
     params.filters = `category[contains]${activeCategory.id}`
