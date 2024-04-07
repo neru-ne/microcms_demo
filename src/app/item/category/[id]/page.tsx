@@ -78,7 +78,6 @@ export default function Category() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data)
       setItemList(data.data);
     }
   }, [data])

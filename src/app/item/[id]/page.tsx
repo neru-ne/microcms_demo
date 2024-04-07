@@ -51,7 +51,6 @@ export default function ItemDetail() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data)
       setItem(data.data)
     }
   }, [data])

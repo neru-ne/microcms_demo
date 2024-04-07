@@ -5,8 +5,6 @@ export const ErrorContentsArea = (props: errorContentsAreaType) => {
   const { data, error, buttonSetting } = props;
 
   if (error) {
-    console.log(error.response)
-
     if (error.response.status === 404) {
       return (
         <>

@@ -38,7 +38,6 @@ export default function Item() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data)
       setItemList(data.data);
     }
   }, [data])
