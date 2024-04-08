@@ -15,8 +15,7 @@ export const RepeatContents = (props: repeatContentsType) => {
           );
         case "img_single_col":
           let css = "flex"
-          if (item.layout === "右：画像　左：文章") {
-          } else {
+          if (item.layout[0] === "右：画像　左：文章") {
             css = css + " flex-row-reverse";
           }
           return (

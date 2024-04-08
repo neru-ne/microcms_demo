@@ -1,9 +1,11 @@
 import { MainContents } from '@/app/components/layouts/MainContents'
+import {Head} from '@/app/components/layouts/Head'
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <main>
+      <Head/>
       <MainContents>
         HOME
         <ul>

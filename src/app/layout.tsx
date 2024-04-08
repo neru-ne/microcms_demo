@@ -3,6 +3,8 @@ import "./globals.css";
 
 import { RecoilRoot } from 'recoil';
 import { SetOption } from '@/app/components/atoms/options/SetOption'
+import { Head } from '@/app/components/layouts/Head'
+
 
 export default function RootLayout({
   children,
@@ -13,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <RecoilRoot>
+        <Head />
         <body >
             <SetOption />
             {children}

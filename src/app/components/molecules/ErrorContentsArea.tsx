@@ -38,7 +38,7 @@ export const ErrorContentsArea = (props: errorContentsAreaType) => {
   } else {
     if (!data) {
       return (
-        <p className='text-center'>loading...</p>
+        <p className='text-center my-10'>loading...</p>
       )
     }
   }

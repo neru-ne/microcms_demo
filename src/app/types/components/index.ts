@@ -69,3 +69,15 @@ export type pageHeaderType = {
 export type searchFormType = {
   onClick: () => void,
 }
+
+//commonCheckbox
+export type commonCheckboxType = {
+  name:string,
+  id:string,
+  value:string,
+  disabled:boolean,
+  className:string,
+  title:string,
+  checked:boolean,
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
