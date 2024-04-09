@@ -4,8 +4,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { searchKeywordAtom } from "@/app/recoil/searchKeywordAtom";
 import { searchKindsAtom, searchPriceAtom, searchKindsListAtom, searchPriceListAtom } from "@/app/recoil/search"
-
 import { itemListAtom } from "@/app/recoil/itemListAtom";
+import { metaDataAtom } from '@/app/recoil/metaDataAtom'
 
 import { getRequest } from "@/app/api/index"
 import { PageHeader } from '@/app/components/organisms/PageHeader'
@@ -22,6 +22,7 @@ const NEXT_PUBLIC_MICROCMS_URL = process.env.NEXT_PUBLIC_MICROCMS_URL
 
 export default function Search() {
 
+
   const router = useRouter();
 
   //recoil
@@ -31,6 +32,7 @@ export default function Search() {
   const [searchKeyword, setSearchKeyword] = useRecoilState(searchKeywordAtom);
   const [searchKindsList, setSearchKindsList] = useRecoilState(searchKindsListAtom);
   const [searchPriceList, setSearchPriceList] = useRecoilState(searchPriceListAtom);
+  const [metaData, setMetaData] = useRecoilState(metaDataAtom);
 
   //useState
   const [searchApplyFlg, setSearchApplyFlg] = useState<boolean>(false);
@@ -39,8 +41,15 @@ export default function Search() {
   const [searchWord, setSearchWord] = useState<string>("");
   const [searchFilters, setSearchFilters] = useState<string>("");
   const [searchFiltersText, setSearchFiltersText] = useState<string>("");
-  const [resError,setResError] = useState<string>("");
+  const [resError, setResError] = useState<string>("");
 
+  //metaデータの設定
+  useEffect(() => {
+    const metaDataCopy = { ...metaData };
+    metaDataCopy.title = "Search"
+    metaDataCopy.description = "searchページです";
+    setMetaData(metaDataCopy);
+  }, [])
 
   let params = {
     limit: 100,
@@ -61,11 +70,11 @@ export default function Search() {
       setSearchFlg(true);
       setSearchApplyFlg(true);
       setSearchKind("keyword");
-    }else{
+    } else {
       //絞り込み検索
       if (paramsKinds || paramsPrice) {
-        if (paramsKinds){
-          const paramsKindsArray =  paramsKinds.split(',');
+        if (paramsKinds) {
+          const paramsKindsArray = paramsKinds.split(',');
           setSearchKinds(paramsKindsArray);
 
           const searchKindsListCopy = searchKindsList.map(item => ({ ...item }));
@@ -161,7 +170,7 @@ export default function Search() {
     setSearchKind("checkbox");
     const params = new URLSearchParams();
 
-    if ( 0 < searchKinds.length){
+    if (0 < searchKinds.length) {
       params.set('kinds', searchKinds.join());
     }
     if (0 < searchPrice.length) {
@@ -182,23 +191,21 @@ export default function Search() {
   const FetchAndRender = () => {
 
     useEffect(() => {
-      if (!searchKind) return;
-      if (!searchApplyFlg) return;
+      if (!searchKind || !searchApplyFlg) return;
 
       if (searchKind === "keyword") {
         params.q = searchWord;
-      }else if(searchKind === "checkbox"){
+      } else if (searchKind === "checkbox") {
         const reqParams = returnreqParams();
         setSearchFilters(reqParams)
 
+        //検索結果テキスト入れ込み
         let titleText = "";
-
-        if (0 < searchKinds.length){
+        if (0 < searchKinds.length) {
           titleText = `「種類：${searchKinds.join()}」`;
         }
-
         if (0 < searchPrice.length) {
-          titleText =  titleText + `「金額：${searchPrice.join()}」`;
+          titleText = titleText + `「金額：${searchPrice.join()}」`;
         }
         setSearchFiltersText(titleText)
 
@@ -210,13 +217,13 @@ export default function Search() {
           setItemList(res.data)
           setSearchApplyFlg(false);
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         setResError(err)
-        throw new Error("エラー："+err);
+        throw new Error("エラー：" + err);
       })
-      .finally(() => {
-        setSearchApplyFlg(false);
-      })
+        .finally(() => {
+          setSearchApplyFlg(false);
+        })
     }, [searchWord, searchFilters])
 
     return (

@@ -1,5 +1,11 @@
 import { categoriesType } from '@/app/types/api'
 
+/**
+ * アクティブなカテゴリーを返す
+ * @param data 
+ * @param slug 
+ * @returns 
+ */
 export const selectActiveCategory = (data: categoriesType , slug: string) => {
   const contents = data.contents;
 

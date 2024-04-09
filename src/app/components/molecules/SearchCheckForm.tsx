@@ -9,6 +9,7 @@ import { commonButtonType, searchFormType, commonCheckboxType } from '@/app/type
 
 export const SearchCheckForm = (props: searchFormType) => {
 
+  //recoil
   const [searchKinds, setSearchKinds] = useRecoilState(searchKindsAtom);
   const [searchKindsList, setSearchKindsList] = useRecoilState(searchKindsListAtom);
   const [searchPrice, setSearchPrice] = useRecoilState(searchPriceAtom);
@@ -57,6 +58,12 @@ export const SearchCheckForm = (props: searchFormType) => {
     setSearchPrice(result)
   }
 
+  /**
+   * stateの更新
+   * @param target 
+   * @param data 
+   * @returns 
+   */
   const updateStates = (target: HTMLInputElement, data: string[]) => {
     if (target.checked) {
       let setFlg = false;

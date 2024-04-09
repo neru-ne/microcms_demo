@@ -1,11 +1,9 @@
 "use client"
 import { useEffect } from "react";
-import useSWR from 'swr';
 import { useRecoilState } from "recoil";
 import { categoriesAtom } from "@/app/recoil/categoriesAtom";
 import { getRequest } from "@/app/api/index"
 import { jsonParse } from '@/app/Utils'
-
 
 const NEXT_PUBLIC_MICROCMS_URL = process.env.NEXT_PUBLIC_MICROCMS_URL
 

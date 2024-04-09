@@ -1,3 +1,7 @@
+'use client'
+
+import { usePathname } from "next/navigation";
+
 type Props = {
   title: string
   description: string
@@ -10,15 +14,22 @@ let DOMAIN = process.env.NEXT_PUBLIC_SITE_URL;
 if (!DOMAIN) {
   DOMAIN = ""
 }
-const siteTitle = "Remember Movie";
+const siteTitle = "microCMS x Next.jsデモサイト";
 
 export const CommonMeta = (props: Props) => {
+
+  const pathname = usePathname();
+
   const { title, description, url, type, imageUrl } = props
   return (
     <>
-      <title>{title}</title>
+      <title>{
+        pathname === "/" ? `${title}` : `${title} | ${siteTitle}`
+      }</title>
       <meta name="description" content={description} />
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={
+        pathname === "/" ? `${title}` : `${title} | ${siteTitle}`
+      } />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={siteTitle} />

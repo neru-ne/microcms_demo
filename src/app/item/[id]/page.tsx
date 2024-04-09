@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import useSWR from 'swr';
 import { useRecoilState } from "recoil";
 import { itemAtom } from "@/app/recoil/itemAtom";
+import { metaDataAtom } from '@/app/recoil/metaDataAtom'
 import parse from 'html-react-parser';
 
 import { getRequest } from "@/app/api/index"
@@ -29,6 +30,8 @@ const NEXT_PUBLIC_MICROCMS_URL = process.env.NEXT_PUBLIC_MICROCMS_URL
 
 export default function ItemDetail() {
 
+  const [metaData,setMetaData] = useRecoilState(metaDataAtom);
+
   const backButton: commonButtonType = {
     mode: "link",
     linkHref: "/item",
@@ -47,13 +50,21 @@ export default function ItemDetail() {
   const detailId = pageUrls[len - 1];
 
   const [item, setItem] = useRecoilState(itemAtom);
+
   const { data, error } = useSWR([`${NEXT_PUBLIC_MICROCMS_URL}/item/${detailId}`, params], ([url, params]) => getRequest(url, params))
 
   useEffect(() => {
     if (data) {
-      setItem(data.data)
+      setItem(data.data);
+
+      //metaデータの設定
+        const metaDataCopy = {...metaData};
+        metaDataCopy.title = data.data.name
+        metaDataCopy.description = data.data.default.lead;
+        setMetaData(metaDataCopy);
     }
   }, [data])
+
   return (
     <>
       <PageHeader heading={false}>商品</PageHeader>
@@ -98,11 +109,13 @@ export default function ItemDetail() {
                     </div>
                   )
                 }
+                {/* お客様の声 */}
                 {
                   item.custom && 0 < item.custom.body.length && (
                     <CustomerList list={item.custom.body} className="mt-8 mb-2" keyName="item-customerList-" />
                   )
                 }
+                {/* リピートコンテンツ */}
                 {
                   item.contents && 0 < item.contents.length && (
                     <RepeatContents data={item.contents}  />

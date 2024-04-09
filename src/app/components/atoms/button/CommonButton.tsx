@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { commonButtonType } from '@/app/types/components'
 
-
 export const CommonButton = (props: commonButtonType) => {
   const { mode, linkHref, name, blank, onClick, } = props;
 

@@ -38,8 +38,8 @@ export const ItemSlideshow = (props: itemSlideshowType) => {
         {
           list.map((item, index) => {
             return (
-              <SwiperSlide key={`image-slideshow-${index}`}>
-                <img  src={item.url} alt="" />
+              <SwiperSlide key={`${keyName}${index}`}>
+                <img src={item.url} alt="" />
               </SwiperSlide>
             )
           })

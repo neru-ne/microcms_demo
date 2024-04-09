@@ -9,7 +9,7 @@ export type setActiveCategoryType = {
 }
 
 // meta
-export type typeMetaData = {
+export type metaDataType = {
   title: string
   description: string
   url: string
@@ -17,6 +17,6 @@ export type typeMetaData = {
   imageUrl: string
 }
 
-export type typeMetaDataObj = {
-  [K in string]: typeMetaData;
+export type metaDataObjType = {
+  [K in string]: metaDataType;
 };

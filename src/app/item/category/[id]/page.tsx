@@ -5,16 +5,16 @@ import useSWR from 'swr';
 import { useRecoilState } from "recoil";
 import { itemListAtom } from "@/app/recoil/itemListAtom";
 import { categoriesAtom } from "@/app/recoil/categoriesAtom";
+import { metaDataAtom } from '@/app/recoil/metaDataAtom'
 
 import { getRequest } from "@/app/api/index"
 import { PageHeader } from '@/app/components/organisms/PageHeader'
-
 import { MainContents } from '@/app/components/layouts/MainContents'
-import { Archive } from "@/app/components/organisms/Archive";
 
 import { CommonButton } from "@/app/components/atoms/button/CommonButton";
 import { PageNavi } from '@/app/components/atoms/navi/pageNavi'
 import { ErrorContentsArea } from '@/app/components/molecules/ErrorContentsArea'
+import { Archive } from "@/app/components/organisms/Archive";
 
 //Utils
 import { selectActiveCategory } from '@/app/Utils/item/selectActiveCategory'
@@ -34,8 +34,27 @@ export default function Category() {
     blank: false,
   }
 
+  const [metaData, setMetaData] = useRecoilState(metaDataAtom);
   const [categoriesList, setCategoriesList] = useRecoilState(categoriesAtom);
+  const [itemList, setItemList] = useRecoilState(itemListAtom);
 
+  const [activeCategory, setActiveCategory] = useState<{
+    id: string;
+    name: string;
+    slug: string;
+  } | "">("");
+
+  //metaデータの設定
+  useEffect(() => {
+    if (activeCategory) {
+      const metaDataCopy = { ...metaData };
+      metaDataCopy.title = `カテゴリー：${activeCategory.name}の商品`
+      metaDataCopy.description = "カテゴリーページです";
+      setMetaData(metaDataCopy);
+    }
+  }, [activeCategory])
+
+  //URLから、どのカテゴリーページなのか判定
   const pathname = usePathname();
   const pageUrls = pathname.split('/');
   const len = pageUrls.length;
@@ -44,32 +63,26 @@ export default function Category() {
 
   useEffect(() => {
     if (categoriesList) {
-      const sctiveCategory = selectActiveCategory(categoriesList, categorySlug);
-      setActiveCategory(sctiveCategory)
+      const activeCategory = selectActiveCategory(categoriesList, categorySlug);
+      setActiveCategory(activeCategory)
     }
   }, [categoriesList])
 
-
-  const [activeCategory, setActiveCategory] = useState<{
-    id: string;
-    name: string;
-    slug: string;
-  } | "">("");
-
-  const [itemList, setItemList] = useRecoilState(itemListAtom);
 
   let params = {
     limit: process.env.NEXT_PUBLIC_ITEM_PER_PAGE,
     fields: 'id,name,category,kinds,price',
     filters: '',
-    offset:0,
+    offset: 0,
   };
   const searchParams = useSearchParams();
+  //ページ数入れ込み
   const paramsPage = searchParams.get("page");
   if (paramsPage) {
-    params.offset = Number(paramsPage) -1
+    params.offset = Number(paramsPage) - 1
   }
 
+  //カテゴリーで絞り込み
   if (activeCategory) {
     params.filters = `category[contains]${activeCategory.id}`
   }
@@ -91,7 +104,7 @@ export default function Category() {
         {
           data && itemList && activeCategory && (
             <>
-                <p className="font-bold text-xl mb-6">カテゴリー：{activeCategory.name}の商品</p>
+              <p className="font-bold text-xl mb-6">カテゴリー：{activeCategory.name}の商品</p>
               <Archive {...itemList} />
               <PageNavi url={`/item/category/${activeCategory.slug}`} />
             </>

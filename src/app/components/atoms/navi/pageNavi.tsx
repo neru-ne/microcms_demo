@@ -1,17 +1,15 @@
-"use client"
 import Link from 'next/link'
 import { useRecoilState } from 'recoil';
 import { itemListAtom } from '@/app/recoil/itemListAtom';
 
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
-
 export const PageNavi = (props: { url: string }) => {
 
   const [itemList, setItemList] = useRecoilState(itemListAtom);
 
   const PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEM_PER_PAGE);//1ページにおける表示数
-  const STEP = 2;//カレントページの前後表示数
+  const STEP = 2;//現在のページの前後表示数
 
   if (!itemList) return;
 
@@ -20,13 +18,13 @@ export const PageNavi = (props: { url: string }) => {
   const range = (start: number, end: number) =>
     [...Array(end - start + 1)].map((_, i) => start + i);
 
-  let maxPage = Math.ceil(totalCount / PER_PAGE);
-  let firstPage = (offset + 1) - STEP;
-  let lastPage = (offset + 1) + STEP;
+  let maxPage = Math.ceil(totalCount / PER_PAGE); //全ページ数
+  let firstPage = (offset + 1) - STEP; // 表示する最初のページ
+  let lastPage = (offset + 1) + STEP;//表示する最後のページ
 
 
-  let firstFlg = false;
-  let lastFlg = false;
+  let firstFlg = false;//・・・と最初のリンクを表示するかどうか
+  let lastFlg = false;//・・・と最後のリンクを表示するかどうか
 
   if (firstPage <= 0) {
     firstPage = 1
@@ -51,7 +49,7 @@ export const PageNavi = (props: { url: string }) => {
       <div className='flex justify-center'>
         <ul className='flex gap-4 mt-1 c-pageNavi'>
           {
-            0 < (offset) && <li className='flex bg-white rounded-md shadow-md '><Link href={`${props.url}?page=${offset}`} className='flex items-center px-3 py-2'><FaAngleLeft /></Link></li>
+            0 < (offset) && <li className='flex bg-white rounded-md shadow-md '><Link href={`${props.url}?page=${offset}`} className='flex items-center px-3 py-2'><FaAngleLeft/></Link></li>
           }
           {
             firstFlg && (
@@ -77,7 +75,7 @@ export const PageNavi = (props: { url: string }) => {
             )
           }
           {
-            (offset + 1) < maxPage && <li className='flex bg-white rounded-md shadow-md '><Link href={`${props.url}?page=${offset + 2}`} className='flex items-center px-3 py-2'><FaAngleRight /></Link></li>
+            (offset + 1) < maxPage && <li className='flex bg-white rounded-md shadow-md '><Link href={`${props.url}?page=${offset + 2}`} className='flex items-center px-3 py-2'><FaAngleRight/></Link></li>
           }
         </ul>
       </div>

@@ -30,7 +30,7 @@ export const RepeatContents = (props: repeatContentsType) => {
           //画像単体
           return <img src={item.img.url} alt="" />
         default:
-          return <>a</>
+          return <>default</>
       }
   }
 

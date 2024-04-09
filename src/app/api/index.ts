@@ -7,7 +7,6 @@ const headers = {
   'X-MICROCMS-API-KEY': MICROCCMS_KEY
 }
 
-
 /**
  * GETリクエスト
  */

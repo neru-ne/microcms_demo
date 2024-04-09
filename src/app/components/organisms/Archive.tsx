@@ -4,7 +4,6 @@ import { CategoryList } from "@/app/components/atoms/list/CategoryList"
 
 import { itemListType } from '@/app/types/api'
 
-
 export const Archive = (props: itemListType) => {
   return (
     <>
