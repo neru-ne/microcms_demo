@@ -20,3 +20,11 @@ export type metaDataType = {
 export type metaDataObjType = {
   [K in string]: metaDataType;
 };
+
+export type contactFormAtomType = {
+  sucess: boolean,
+  contents: {
+    name: string,
+    error: string | "",
+  }[],
+}

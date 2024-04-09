@@ -21,6 +21,7 @@ export const SearchCheckForm = (props: searchFormType) => {
     linkHref: "",
     name: "キーワード検索",
     blank: false,
+    kinds:"primary",
     onClick: props.onClick
   }
 

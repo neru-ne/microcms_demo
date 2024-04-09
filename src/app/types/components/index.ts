@@ -6,6 +6,7 @@ export type commonButtonType = {
   linkHref: "" | string,
   name: string,
   blank:boolean,
+  kinds:"primary"|"secondary" | "other",
   onClick?: () => void,
 }
 //CategoryList
@@ -70,6 +71,29 @@ export type searchFormType = {
   onClick: () => void,
 }
 
+//commonInputType
+export type commonInputType = {
+  name:string,
+  id:string,
+  value:string,
+  className:string,
+  title:string,
+  placeholder:string,
+  required:boolean,
+  error?:string | "",
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+//commonTextareaType
+export type commonTextareaType = {
+  name:string,
+  id:string,
+  value:string,
+  title:string,
+  className:string,
+  required:boolean,
+  error?:string | "",
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
+}
 //commonCheckbox
 export type commonCheckboxType = {
   name:string,
@@ -80,4 +104,30 @@ export type commonCheckboxType = {
   title:string,
   checked:boolean,
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+//commonRadioType
+export type commonRadioType = {
+  name:string,
+  id:string,
+  value:string,
+  disabled:boolean,
+  className:string,
+  title:string,
+  checked:boolean,
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+//radioListType
+export type radioListType = {
+  input:string,
+  required:boolean,
+  name:string,
+  contents:any,
+}
+
+//contactTableType
+export type contactTableType = {
+  title:string,
+  required:boolean,
+  children:ReactNode
 }

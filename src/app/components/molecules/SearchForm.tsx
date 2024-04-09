@@ -15,6 +15,7 @@ export const SearchForm = (props: searchFormType) => {
     linkHref: "",
     name: "検索",
     blank: false,
+    kinds:"primary",
     onClick: props.onClick
   }
 

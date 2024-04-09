@@ -37,6 +37,7 @@ export default function ItemDetail() {
     linkHref: "/item",
     name: "Itemに戻る",
     blank: false,
+    kinds:"primary",
   }
 
   const params = {

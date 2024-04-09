@@ -32,6 +32,7 @@ export default function Category() {
     linkHref: "/item",
     name: "Itemに戻る",
     blank: false,
+    kinds:"primary",
   }
 
   const [metaData, setMetaData] = useRecoilState(metaDataAtom);

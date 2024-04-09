@@ -22,6 +22,8 @@ export default function Home() {
         <ul>
           <li><Link href='/item' className='underline'>item</Link></li>
           <li><Link href='/search' className='underline'>search</Link></li>
+          <li><Link href='/contact' className='underline'>contact</Link></li>
+
         </ul>
       </MainContents>
     </main>
