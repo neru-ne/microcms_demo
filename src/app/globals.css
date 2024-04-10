@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 
-body {
-}
+body {}
+
 .mainContents {
   margin-left: auto;
   margin-right: auto;
@@ -13,6 +13,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .c-button {
   @apply bg-primary;
   display: flex;
@@ -25,9 +26,29 @@ body {
   font-size: 18px;
   font-weight: 800;
   border-radius: 9999px;
-  color: #fff;
+  border: 2px solid transparent;
   transition: color .3s, background .3s;
+}
+.c-button.primary {
+  @apply bg-primary text-white;
+}
+.c-button.secondary {
+  @apply border-primary text-primary bg-white;
+}
+.c-button.other {
+  background: #c0c0c0;
+  color: #000;
 }
 .c-button:hover {
   @apply bg-primary/20 text-primary;
+}
+
+.c-itemSlideshow {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 5 / 3;
+}
+
+.c-pageNavi .is-current {
+  @apply bg-primary text-white
 }

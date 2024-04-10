@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { categoryListType } from '@/app/types/components'
 
 export const CategoryList = (props: categoryListType) => {
@@ -5,7 +6,8 @@ export const CategoryList = (props: categoryListType) => {
   const {
     list,
     className,
-    keyName
+    keyName,
+    link,
   } = props;
 
   return (
@@ -14,10 +16,16 @@ export const CategoryList = (props: categoryListType) => {
       {
         list.map((itemCategory, index) => {
           return (
-            <span className={`bg-primary text-white px-2 py-1 text-[12px] rounded-lg ${itemCategory.slug}`} key={`${keyName}${index}`}>
-              {itemCategory.name}
-            </span>
+            link ?
+              <Link href={`/item/category/${itemCategory.slug}`} className={`bg-primary text-white px-2 py-1 text-[12px] rounded-lg ${itemCategory.slug}`} key={`${keyName}${index}`}>
+                {itemCategory.name}
+              </Link>
+              :
+              <span className={`bg-primary text-white px-2 py-1 text-[12px] rounded-lg ${itemCategory.slug}`} key={`${keyName}${index}`}>
+                {itemCategory.name}
+              </span>
           )
+
         })
       }
     </div>

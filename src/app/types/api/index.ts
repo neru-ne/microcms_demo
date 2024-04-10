@@ -22,7 +22,7 @@ export type itemType = {
   contents:any | null
 }
 
-//itemList 
+//itemList
 export type itemListType = {
   contents:{
     id: string,
@@ -34,6 +34,18 @@ export type itemListType = {
     }[],
     kinds:string[],
     price:string[],
+  }[],
+  totalCount: string,
+  offset: string,
+  limit: string,
+}
+
+//categories
+export type categoriesType = {
+  contents:{
+    id: string,
+    name: string,
+    slug: string,
   }[],
   totalCount: string,
   offset: string,

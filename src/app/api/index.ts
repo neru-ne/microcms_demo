@@ -7,7 +7,6 @@ const headers = {
   'X-MICROCMS-API-KEY': MICROCCMS_KEY
 }
 
-
 /**
  * GETリクエスト
  */
@@ -20,8 +19,8 @@ export const getRequest = (
   url: url,
   params:params,
   timeout: 35000,
-
 }).then((response) => {
+  console.log(response)
   return response;
 });
 
@@ -41,5 +40,7 @@ export const postRequest = (
   params:params,
   timeout: 35000,
 }).then((response) => {
+  console.log(response)
+
   return response;
 });
